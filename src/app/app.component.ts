@@ -43,11 +43,11 @@ export class AppComponent implements OnInit {
           console.log("WPR", wpr);
           if(!wpr){
             console.log("Leanplum register for push");
-            // Leanplum.default.registerForWebPush(this.swPush).then(r=>{
-            //   console.log("Register push result", r);
-            // }).catch(e=>{
-            //   console.log("Error push result", e);
-            // })
+            Leanplum.default.registerForWebPush("../assets/sw.js").then(r=>{
+              console.log("Register push result", r);
+            }).catch(e=>{
+              console.log("Error push result", e);
+            })
           }
         }).catch(wpe=>{
           console.log("err", wpe)
