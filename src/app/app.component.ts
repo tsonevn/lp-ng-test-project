@@ -48,6 +48,12 @@ export class AppComponent implements OnInit {
             }).catch(e=>{
               console.log("Error push result", e);
             })
+          } else{
+            Leanplum.default.unregisterFromWebPush().then(r=>{
+              console.log("Unregister push result", r);
+            }).catch(e=>{
+              console.log("Error push unregister", e);
+            })
           }
         }).catch(wpe=>{
           console.log("err", wpe)
