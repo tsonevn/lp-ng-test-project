@@ -46,20 +46,29 @@ export class AppComponent implements OnInit {
         var context = args.context;
         console.log("MSG", message)
         // 2. Filter out unsupported message types
-        if (message.__name__ !== 'Confirm') {
+        if ((message.__name__ !== 'Confirm') && (message.__name__ !=='Alert')) {
           return;
         }
         
         // 3. Track impression
         context.track();
         
-        // 4. Show message and trigger attached actions
-        //    (message can be rendered in HTML and actions can be called asynchronously)
-        if (confirm(message.Message)) {
-          context.runTrackedActionNamed('Accept action');
-        } else {
-          context.runTrackedActionNamed('Cancel action');
+        switch (message.__name__) {
+          case 'Confirm':
+            if (confirm(message.Message)) {
+              context.runTrackedActionNamed('Accept action');
+            } else {
+              context.runTrackedActionNamed('Cancel action');
+            }
+            break;
+          case 'Alert':
+            alert(`${message.Title}\n${message.Message}`);
+            context.runTrackedActionNamed('Alert OK Tap');
+            break;
+          default:
+            break;
         }
+        
       });
       if(Leanplum.default.isWebPushSupported()){
         Leanplum.default.isWebPushSubscribed().then(wpr=>{
