@@ -33,67 +33,79 @@ export class AppComponent implements OnInit {
       Leanplum.default.setAppIdForProductionMode(this.appId, this.pKey);
      }
      
-     Leanplum.default.setVariables(this.variables);
+    //  Leanplum.default.setVariables(this.variables);
+     Leanplum.default.enableRichInAppMessages(true);
     //  Leanplum.default.track("View Cart", {itemsInCart: 4});
-     Leanplum.default.start((success) => {
-      console.log('Success: ' + success);
-      console.log('Variables', Leanplum.default.getVariables());
-      Leanplum.default.setUserId("2webUser");
-      this.variablesGet = Leanplum.default.getVariables();
-      console.log("variables",this.variablesGet);
-      Leanplum.default.on('showMessage', function (args){
-        var message = args.message;
-        var context = args.context;
-        console.log("MSG", message)
-        // 2. Filter out unsupported message types
-        if ((message.__name__ !== 'Confirm') && (message.__name__ !=='Alert')) {
-          return;
-        }
+    Leanplum.default.start("angular21012022")
+    //  Leanplum.default.start((success) => {
+    //   console.log('Success: ' + success);
+    //   // console.log('Variables', Leanplum.default.getVariables());
+    //   // Leanplum.default.setUserAttributes({"firstName":"test 2_2webUser"})
+    //   Leanplum.default.setUserId("2_2webUser");
+    //   // Leanplum.default.forceContentUpdate(r=>{
+
+    //   // })
+    //   // setTimeout(() => {
+    //   //   console.log("attribute add");
+    //   //   Leanplum.default.setUserAttributes({"firstName":"test 2_1webUser"})
+    //   // }, 3000);
+      
+    //   // this.variablesGet = Leanplum.default.getVariables();
+    //   // console.log("variables",this.variablesGet);
+    //   Leanplum.default.on('showMessage', function (args){
+    //     console.log("showMessage result", JSON.stringify(args));
+    //     var message = args.message;
+    //     var context = args.context;
+    //     // console.log("MSG test", message)
+    //     // 2. Filter out unsupported message types
+    //     if ((message.__name__ !== 'Confirm') && (message.__name__ !=='Alert')) {
+    //       return;
+    //     }
         
-        // 3. Track impression
-        context.track();
+    //     // 3. Track impression
+    //     context.track();
         
-        switch (message.__name__) {
-          case 'Confirm':
-            if (confirm(message.Message)) {
-              context.runTrackedActionNamed('Accept action');
-            } else {
-              context.runTrackedActionNamed('Cancel action');
-            }
-            break;
-          case 'Alert':
-            alert(`${message.Title}\n${message.Message}`);
-            context.runTrackedActionNamed('Alert OK Tap');
-            break;
-          default:
-            break;
-        }
+    //     switch (message.__name__) {
+    //       case 'Confirm':
+    //         if (confirm(message.Message)) {
+    //           context.runTrackedActionNamed('Accept action');
+    //         } else {
+    //           context.runTrackedActionNamed('Cancel action');
+    //         }
+    //         break;
+    //       case 'Alert':
+    //         alert(`${message.Title}\n${message.Message}`);
+    //         context.runTrackedActionNamed('Alert OK Tap');
+    //         break;
+    //       default:
+    //         break;
+    //     }
         
-      });
-      if(Leanplum.default.isWebPushSupported()){
-        Leanplum.default.isWebPushSubscribed().then(wpr=>{
-          console.log("WPR", wpr);
-          if(!wpr){
-            console.log("Leanplum register for push");
-            Leanplum.default.registerForWebPush("assets/sw.js").then(r=>{
-              console.log("Register push result", r);
+    //   });
+    //   // if(Leanplum.default.isWebPushSupported()){
+    //   //   Leanplum.default.isWebPushSubscribed().then(wpr=>{
+    //   //     console.log("WPR", wpr);
+    //   //     if(!wpr){
+    //   //       console.log("Leanplum register for push");
+    //   //       Leanplum.default.registerForWebPush("assets/sw.js").then(r=>{
+    //   //         console.log("Register push result", r);
               
-            }).catch(e=>{
-              console.log("Error push result", e);
-            })
-          } else{
-            // Leanplum.default.unregisterFromWebPush().then(r=>{
-            //   console.log("Unregister push result", r);
-            // }).catch(e=>{
-            //   console.log("Error push unregister", e);
-            // })
+    //   //       }).catch(e=>{
+    //   //         console.log("Error push result", e);
+    //   //       })
+    //   //     } else{
+    //   //       // Leanplum.default.unregisterFromWebPush().then(r=>{
+    //   //       //   console.log("Unregister push result", r);
+    //   //       // }).catch(e=>{
+    //   //       //   console.log("Error push unregister", e);
+    //   //       // })
             
-          }
-        }).catch(wpe=>{
-          console.log("err", wpe)
-        })
-      }
-     });
+    //   //     }
+    //   //   }).catch(wpe=>{
+    //   //     console.log("err", wpe)
+    //   //   })
+    //   // }
+    //  });
   }
   setVar(){
     console.log("CLICK - val", this.inputVal);
